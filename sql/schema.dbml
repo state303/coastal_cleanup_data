@@ -1,0 +1,78 @@
+Table "country" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(512) [unique]
+}
+
+Table "state" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(512) [unique]
+}
+
+Table "zone" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(512) [unique]
+}
+
+Table "cleanup_group" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(512) [unique]
+}
+
+Table "litter" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(256) [unique]
+}
+
+Table "cleanup_type" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(128) [unique]
+}
+
+Table "environment" {
+  "id" SERIAL [pk, increment]
+  "name" VARCHAR(128) [unique]
+}
+
+Table "cleanup" {
+  "id" SERIAL [pk, increment]
+  "latitude" DOUBLEPRECISION [not null]
+  "longitude" DOUBLEPRECISION [not null]
+  "cleaned_at" DATE [not null]
+  "adult" INTEGER [default: 0]
+  "child" INTEGER [default: 0]
+  "kilograms" DOUBLEPRECISION
+  "distance" DOUBLEPRECISION
+  "area" DOUBLEPRECISION [default: 0]
+  "zone_id" INTEGER
+  "country_id" INTEGER
+  "state_id" INTEGER
+  "cleanup_group_id" INTEGER
+  "environment_id" INTEGER
+  "cleanup_type_id" INTEGER
+}
+
+Table "cleanup_litter" {
+  "litter_id" INTEGER
+  "cleanup_id" INTEGER
+  "count" INTEGER
+
+Indexes {
+  (litter_id, cleanup_id) [unique, name: "pk__cleanup_litter__litter_id_cleanup_id"]
+}
+}
+
+Ref:"zone"."id" < "cleanup"."zone_id"
+
+Ref:"country"."id" < "cleanup"."country_id"
+
+Ref:"state"."id" < "cleanup"."state_id"
+
+Ref:"cleanup_group"."id" < "cleanup"."cleanup_group_id"
+
+Ref:"environment"."id" < "cleanup"."environment_id"
+
+Ref:"cleanup_type"."id" < "cleanup"."cleanup_type_id"
+
+Ref:"litter"."id" < "cleanup_litter"."litter_id"
+
+Ref:"cleanup"."id" < "cleanup_litter"."cleanup_id"

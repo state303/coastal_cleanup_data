@@ -1,0 +1,6 @@
+Project coastal_cleanup_data {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # Marine Microplastic Database
+  '''
+}

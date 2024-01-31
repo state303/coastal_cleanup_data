@@ -1,0 +1,7 @@
+selenium
+pandas
+xlrd
+pyvirtualdisplay
+webdriver_manager
+python-dotenv
+psycopg2-binary
